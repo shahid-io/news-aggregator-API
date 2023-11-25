@@ -13,7 +13,7 @@ dotenv.config();
 /** middleware */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 /** routes */
 app.use('/api', apiRoutes);
@@ -21,7 +21,7 @@ app.use('/api', apiRoutes);
 
 /** sample route */
 app.get('/', (req, res) => res.status(200).send({
-    message: 'Welcome to the beginning of nothingness.',
+    message: 'Welcome to news-aggregator API',
 }));
 
 
