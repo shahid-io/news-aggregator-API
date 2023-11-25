@@ -13,7 +13,7 @@ dotenv.config();
 /** middleware */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 /** routes */
 app.use('/api', apiRoutes);
@@ -28,8 +28,8 @@ app.get('/', (req, res) => res.status(200).send({
 /** listen for requests */
 app.listen(ServerConfig.PORT, () => {
     console.log(`Serving at http://localhost:${ServerConfig.PORT}`);
-    DBConfig.connect();
     LoggerConfig.info("Successfully started server", {});
+    DBConfig.connect();
     console.log('Press Ctrl+C to quit.');
 });
 
