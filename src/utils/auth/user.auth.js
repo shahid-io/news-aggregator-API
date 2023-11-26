@@ -1,7 +1,9 @@
+const { StatusCodes } = require('http-status-codes');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 const { ServerConfig } = require('../../config');
+const AppError = require('../error/app.error');
+
 
 const comparePassword = async (plainPassword, hashPassword) => {
     try {
@@ -29,6 +31,16 @@ const generateToken = async (payload) => {
     }
 }
 
+const verifyToken = async (token) => {
+    try {
+        return jwt.verify(token, ServerConfig.JWT_SECRET);
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+
 module.exports = {
-    comparePassword, hashPassword, generateToken
+    comparePassword, hashPassword, generateToken, verifyToken
 }

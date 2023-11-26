@@ -33,3 +33,5 @@ app.listen(ServerConfig.PORT, () => {
     console.log('Press Ctrl+C to quit.');
 });
 
+module.exports = app;
+

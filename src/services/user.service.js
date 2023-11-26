@@ -3,6 +3,8 @@ const AppError = require("../utils/error/app.error");
 const User = require('../models/user.model');
 const UserAuth = require('../utils/auth/user.auth');
 class UserService {
+    /** constructor */
+    constructor() { }
     async signUp(data) {
         try {
             const newUser = new User(data);
@@ -17,7 +19,7 @@ class UserService {
                 });
                 throw new AppError(explanation, StatusCodes.BAD_REQUEST);
             }
-            throw new AppError("Cannot create a new User object", StatusCodes.INTERNAL_SERVER_ERROR);
+            throw new AppError("Cannot create a new User object", StatusCodes.BAD_REQUEST);
         }
     }
     async signIn(data) {
@@ -31,7 +33,7 @@ class UserService {
             if (!isMatch) {
                 throw new AppError('Invalid password', StatusCodes.UNAUTHORIZED);
             }
-            const user_token = UserAuth.generateToken({ id: user._id, username: user.username }); 
+            const user_token = UserAuth.generateToken({ id: user._id, username: user.username });
             return user_token;
         } catch (error) {
             if (error instanceof AppError) throw error;
@@ -48,6 +50,30 @@ class UserService {
             return user;
         } catch (error) {
             if (error instanceof AppError) throw error;
+            throw new AppError('Something went wrong', StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    async isAuthenticated(token) {
+        try {
+            if (!token) {
+                throw new AppError('Missing JWT token', StatusCodes.BAD_REQUEST);
+            }
+            const response = await UserAuth.verifyToken(token);
+            const user = await  User.findById(response.id);
+            if (!user) {
+                throw new AppError('No user found', StatusCodes.NOT_FOUND);
+            }
+            return user.id;
+        } catch (error) {
+            console.log(error);
+            if (error instanceof AppError) throw error;
+            if (error.name == 'JsonWebTokenError') {
+                throw new AppError('Invalid JWT token', StatusCodes.BAD_REQUEST);
+            }
+            if (error.name == 'TokenExpiredError') {
+                throw new AppError('JWT token expired', StatusCodes.BAD_REQUEST);
+            }
             throw new AppError('Something went wrong', StatusCodes.INTERNAL_SERVER_ERROR);
         }
     }
