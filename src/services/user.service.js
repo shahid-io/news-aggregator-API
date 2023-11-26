@@ -60,7 +60,7 @@ class UserService {
                 throw new AppError('Missing JWT token', StatusCodes.BAD_REQUEST);
             }
             const response = await UserAuth.verifyToken(token);
-            const user = await  User.findById(response.id);
+            const user = await User.findById(response.id);
             if (!user) {
                 throw new AppError('No user found', StatusCodes.NOT_FOUND);
             }
@@ -77,7 +77,54 @@ class UserService {
             throw new AppError('Something went wrong', StatusCodes.INTERNAL_SERVER_ERROR);
         }
     }
+    async getNewsPreferences(id) {
+        try {
+            const user = await User.findById(id);
+            if (!user) {
+                throw new AppError('No user found', StatusCodes.NOT_FOUND);
+            }
+            return user.preferences;
+        } catch (error) {
+            if (error instanceof AppError) throw error;
+            throw new AppError('Something went wrong', StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async updateNewsPreferences(id, newPreferences) {
+        try {
+            const user = await User.findById(id);
+            if (!user) {
+                throw new AppError('No user found', StatusCodes.NOT_FOUND);
+            }
+            /** if array */
+            if (Array.isArray(newPreferences.preferences)) {
+                const uniquePreferences = newPreferences.preferences.filter(
+                    (pref) => !user.preferences.includes(pref)
+                );
 
+                uniquePreferences.forEach((pref) => {
+                    user.preferences.push(pref);
+                });
+
+                await user.save();
+                return user.preferences;
+            }
+            if (!user.preferences.includes(newPreferences.preferences)) {
+                user.preferences.push(newPreferences.preferences);
+                await user.save();
+            }
+            /** if not an array */
+            if (!user.preferences.includes(newPreferences.preferences)) {
+                user.preferences.push(newPreferences.preferences);
+                await user.save();
+            }
+            await user.save();
+            return user.preferences;
+        }
+        catch (error) {
+            if (error instanceof AppError) throw error;
+            throw new AppError('Something went wrong', StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
 
 module.exports = UserService;

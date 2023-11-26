@@ -3,8 +3,10 @@ const UserController = require('../controllers/user.controller');
 const { AuthReqMiddleware, ValidateUserReqMiddleware } = require('../middlewares');
 const router = express.Router();
 
-router.post('/signup', ValidateUserReqMiddleware.validateUserRequest, UserController.signupUser);
-router.post('/login', ValidateUserReqMiddleware.validateUserRequest, UserController.loginUser);
+router.post('/register', ValidateUserReqMiddleware.validateSignUpReq, UserController.signupUser);
+router.post('/login', ValidateUserReqMiddleware.validateSignInReq, UserController.loginUser);
+router.get('/preferences', AuthReqMiddleware.checkAuth, UserController.getNewsPreferences);
+router.put('/preferences', AuthReqMiddleware.checkAuth, UserController.updateNewsPreferences);
 router.get('/:username', AuthReqMiddleware.checkAuth, UserController.getUserByUsername);
 
 module.exports = router;
