@@ -125,6 +125,18 @@ class UserService {
             throw new AppError('Something went wrong', StatusCodes.INTERNAL_SERVER_ERROR);
         }
     }
+    async getUserNewsPreferences(id) {
+        try {
+            const user = await User.findById(id);
+            if (!user) {
+                throw new AppError('No user found', StatusCodes.NOT_FOUND);
+            }
+            return user.preferences;
+        } catch (error) {
+            if (error instanceof AppError) throw error;
+            throw new AppError('Something went wrong', StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
 
 module.exports = UserService;
