@@ -7,6 +7,13 @@ Short project description or tagline.
 - [Project Title](#project-title)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
+  - [API Routes](#api-routes)
+    - [1. **Get Personalized News**](#1-get-personalized-news)
+    - [2. **User Registration**](#2-user-registration)
+    - [3. **User Login**](#3-user-login)
+    - [4. **Get User Preferences**](#4-get-user-preferences)
+    - [5. **Update User Preferences**](#5-update-user-preferences)
+    - [6. **Get User by Username**](#6-get-user-by-username)
   - [Features](#features)
   - [Project Structure](#project-structure)
   - [Getting Started](#getting-started)
@@ -16,11 +23,57 @@ Short project description or tagline.
   - [Start the Server](#start-the-server)
   - [Running Unit Tests](#running-unit-tests)
   - [Contributors](#contributors)
-
 ## Overview
 
 The News Aggregator project is designed to provide users with a personalized news experience based on their preferences. It incorporates robust user authentication, utilizes the NewsAPI to fetch news articles, and follows a structured project organization. The project is implemented using Node.js with essential packages for routing, request handling, authentication, and database operations.
 
+## API Routes
+
+### 1. **Get Personalized News**
+   - **Method:** GET
+   - **Endpoint:** `/`
+   - **Middleware:** `AuthReqMiddleware.checkAuth`
+   - **Controller:** `NewsController.getNews`
+   - **Description:** Fetches personalized news articles based on the user's preferences. Requires authentication to access.
+
+### 2. **User Registration**
+   - **Method:** POST
+   - **Endpoint:** `/register`
+   - **Middleware:** `ValidateUserReqMiddleware.validateSignUpReq`
+   - **Controller:** `UserController.signupUser`
+   - **Description:** Registers a new user in the system. Validates and processes the sign-up request.
+
+### 3. **User Login**
+   - **Method:** POST
+   - **Endpoint:** `/login`
+   - **Middleware:** `ValidateUserReqMiddleware.validateSignInReq`
+   - **Controller:** `UserController.loginUser`
+   - **Description:** Allows an existing user to log in. Validates and processes the login request.
+
+### 4. **Get User Preferences**
+   - **Method:** GET
+   - **Endpoint:** `/preferences`
+   - **Middleware:** `AuthReqMiddleware.checkAuth`
+   - **Controller:** `UserController.getNewsPreferences`
+   - **Description:** Retrieves the news preferences of the authenticated user.
+
+### 5. **Update User Preferences**
+   - **Method:** PUT
+   - **Endpoint:** `/preferences`
+   - **Middleware:** `AuthReqMiddleware.checkAuth`
+   - **Controller:** `UserController.updateNewsPreferences`
+   - **Description:** Updates the news preferences of the authenticated user.
+
+### 6. **Get User by Username**
+   - **Method:** GET
+   - **Endpoint:** `/:username`
+   - **Middleware:** `AuthReqMiddleware.checkAuth`
+   - **Controller:** `UserController.getUserByUsername`
+   - **Description:** Fetches user information based on the provided username. Requires authentication to access.
+
+...
+
+Feel free to explore and use these routes to build a complete News Aggregator application with user authentication and personalized news delivery.
 ## Features
 
 - **User Authentication and Verification:** Implements a secure user authentication system to ensure that only authenticated users can access personalized news.
