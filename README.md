@@ -31,21 +31,21 @@ The News Aggregator project is designed to provide users with a personalized new
 
 ### 1. **Get Personalized News**
    - **Method:** GET
-   - **Endpoint:** `/`
+   - **Endpoint:** `/news`
    - **Middleware:** `AuthReqMiddleware.checkAuth`
    - **Controller:** `NewsController.getNews`
    - **Description:** Fetches personalized news articles based on the user's preferences. Requires authentication to access.
 
 ### 2. **User Registration**
    - **Method:** POST
-   - **Endpoint:** `/register`
+   - **Endpoint:** `/users/register`
    - **Middleware:** `ValidateUserReqMiddleware.validateSignUpReq`
    - **Controller:** `UserController.signupUser`
    - **Description:** Registers a new user in the system. Validates and processes the sign-up request.
 
 ### 3. **User Login**
    - **Method:** POST
-   - **Endpoint:** `/login`
+   - **Endpoint:** `/users/login`
    - **Middleware:** `ValidateUserReqMiddleware.validateSignInReq`
    - **Controller:** `UserController.loginUser`
    - **Description:** Allows an existing user to log in. Validates and processes the login request.
@@ -59,14 +59,14 @@ The News Aggregator project is designed to provide users with a personalized new
 
 ### 5. **Update User Preferences**
    - **Method:** PUT
-   - **Endpoint:** `/preferences`
+   - **Endpoint:** `/users/preferences`
    - **Middleware:** `AuthReqMiddleware.checkAuth`
    - **Controller:** `UserController.updateNewsPreferences`
    - **Description:** Updates the news preferences of the authenticated user.
 
 ### 6. **Get User by Username**
    - **Method:** GET
-   - **Endpoint:** `/:username`
+   - **Endpoint:** `/users/:username`
    - **Middleware:** `AuthReqMiddleware.checkAuth`
    - **Controller:** `UserController.getUserByUsername`
    - **Description:** Fetches user information based on the provided username. Requires authentication to access.
