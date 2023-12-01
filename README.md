@@ -13,7 +13,7 @@ Short project description or tagline.
     - [3. User Login](#3-user-login)
     - [4. Get User Preferences](#4-get-user-preferences)
     - [5. Update User Preferences](#5-update-user-preferences)
-    - [6. **Get User by Username**](#6-get-user-by-username)
+    - [6. Get User by Username](#6-get-user-by-username)
   - [Features](#features)
   - [Project Structure](#project-structure)
   - [Getting Started](#getting-started)
