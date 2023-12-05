@@ -5,7 +5,7 @@ const newsRoutes = require('./news.routes');
 
 const router = express.Router();
 
-router.use('/user', userRoutes);
+router.use('/users', userRoutes);
 router.use('/news', newsRoutes);
 
 

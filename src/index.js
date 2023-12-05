@@ -21,15 +21,17 @@ app.use('/api', apiRoutes);
 
 /** sample route */
 app.get('/', (req, res) => res.status(200).send({
-    message: 'Welcome to the beginning of nothingness.',
+    message: 'Welcome to news-aggregator API',
 }));
 
 
 /** listen for requests */
 app.listen(ServerConfig.PORT, () => {
     console.log(`Serving at http://localhost:${ServerConfig.PORT}`);
-    DBConfig.connect();
     LoggerConfig.info("Successfully started server", {});
+    DBConfig.connect();
     console.log('Press Ctrl+C to quit.');
 });
+
+module.exports = app;
 
